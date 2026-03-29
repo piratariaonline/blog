@@ -1,43 +1,35 @@
 import type { IconMap, SocialLink, Site } from '@/types'
 
 export const SITE: Site = {
-  title: 'astro-erudite',
+  title: 'carta na garrafa',
   description:
-    'astro-erudite is a opinionated, unstyled blogging template—built with Astro, Tailwind, and shadcn/ui.',
-  href: 'https://astro-erudite.vercel.app',
-  author: 'jktrn',
-  locale: 'en-US',
+    'delírios de uma pessoa insubordinada e ingovernável.',
+  href: 'https://alanmm.dev/blog',
+  author: 'alein',
+  locale: 'pt-BR',
   featuredPostCount: 2,
   postsPerPage: 3,
 }
 
 export const NAV_LINKS: SocialLink[] = [
-  {
-    href: '/blog',
-    label: 'blog',
-  },
-  {
-    href: '/authors',
-    label: 'authors',
-  },
-  {
-    href: '/about',
-    label: 'about',
-  },
+  // {
+  //   href: '/blog',
+  //   label: 'blog',
+  // },
+  // {
+  //   href: '/authors',
+  //   label: 'authors',
+  // },
+  // {
+  //   href: '/about',
+  //   label: 'Sobre',
+  // },
 ]
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
-    href: 'https://github.com/jktrn',
-    label: 'GitHub',
-  },
-  {
-    href: 'https://twitter.com/enscry',
-    label: 'Twitter',
-  },
-  {
-    href: 'mailto:jason@enscribe.dev',
-    label: 'Email',
+    href: 'https://bsky.app/profile/piratariaonline.bsky.social',
+    label: 'Bluesky',
   },
   {
     href: '/rss.xml',
@@ -46,10 +38,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
 ]
 
 export const ICON_MAP: IconMap = {
-  Website: 'lucide:globe',
-  GitHub: 'lucide:github',
-  LinkedIn: 'lucide:linkedin',
-  Twitter: 'lucide:twitter',
+  Bluesky: 'simple-icons:bluesky',
   Email: 'lucide:mail',
   RSS: 'lucide:rss',
 }
