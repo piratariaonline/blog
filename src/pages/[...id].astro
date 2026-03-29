@@ -112,7 +112,7 @@ const tocSections = await getTOCSections(currentPostId)
 	    post.data.image && (
 	      <Image
 	        src={post.data.image}
-	        alt={post.data.title}
+		        alt={post.data.imageAlt ?? post.data.title}
 	        width={1200}
 	        height={630}
 	        class="col-span-full mx-auto w-full max-w-5xl object-cover"
