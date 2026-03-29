@@ -11,12 +11,12 @@ export async function GET(context: APIContext) {
       title: SITE.title,
       description: SITE.description,
       site: context.site ?? SITE.href,
-      items: posts.map((post) => ({
-        title: post.data.title,
-        description: post.data.description,
-        pubDate: post.data.date,
-        link: `/blog/${post.id}/`,
-      })),
+	      items: posts.map((post) => ({
+	        title: post.data.title,
+	        description: post.data.description,
+	        pubDate: post.data.date,
+	        link: `/${post.id}/`,
+	      })),
     })
   } catch (error) {
     console.error('Error generating RSS feed:', error)

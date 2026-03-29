@@ -1,12 +1,12 @@
 ---
-import Link from '@/components/Link.astro'
-import { buttonVariants } from '@/components/ui/button'
-import { ICON_MAP } from '@/consts'
-import type { SocialLink } from '@/types'
+import Link from './Link.astro'
+import { buttonVariants } from './ui/button'
+import { ICON_MAP } from '../consts'
+import type { SocialLink } from '../types'
 import { Icon } from 'astro-icon/components'
 
 interface Props {
-  links: SocialLink[]
+	links: SocialLink[]
 }
 
 const { links } = Astro.props

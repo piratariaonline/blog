@@ -4,7 +4,7 @@ export const SITE: Site = {
   title: 'carta na garrafa',
   description:
     'delírios de uma pessoa insubordinada e ingovernável.',
-  href: 'https://alanmm.dev/blog',
+	  href: 'https://blog.alanmm.dev',
   author: 'alein',
   locale: 'pt-BR',
   featuredPostCount: 2,

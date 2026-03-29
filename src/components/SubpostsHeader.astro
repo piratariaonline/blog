@@ -84,9 +84,9 @@ const currentSubpostDetails = isCurrentSubpost
         >
           <div class="max-h-[30vh]">
             <ul class="flex list-none flex-col gap-y-1 px-4 pb-4">
-              {activePost && (
-                <li>
-                  {isActivePost ? (
+	              {activePost && (
+	                <li>
+	                  {isActivePost ? (
                     <div class="text-foreground bg-muted mobile-subposts-active-item flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium">
                       <Icon
                         name="lucide:book-open-text"
@@ -112,9 +112,9 @@ const currentSubpostDetails = isCurrentSubpost
                         )}
                       </div>
                     </div>
-                  ) : (
-                    <a
-                      href={`/blog/${activePost.id}`}
+	                  ) : (
+	                    <a
+	                      href={`/${activePost.id}`}
                       class="mobile-subposts-link hover:text-foreground text-muted-foreground hover:bg-muted/50 flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors"
                     >
                       <Icon
@@ -162,9 +162,9 @@ const currentSubpostDetails = isCurrentSubpost
                           </span>
                         </div>
                       </div>
-                    ) : (
-                      <a
-                        href={`/blog/${subpost.id}`}
+	                      ) : (
+	                        <a
+	                          href={`/${subpost.id}`}
                         class="mobile-subposts-link hover:text-foreground text-muted-foreground hover:bg-muted/50 flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors"
                       >
                         <Icon
