@@ -1,9 +1,9 @@
 
-name: Deploy to GitHub Pages
+name: Publicar
 
 on:
   push:
-    branches: [ main ]      # change if your default branch is not main
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -15,9 +15,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v5
-      - name: Install, build, and upload site
+      - name: Deploy
         uses: withastro/action@v5
 
   deploy:
@@ -27,6 +27,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Publicar
         id: deployment
         uses: actions/deploy-pages@v4

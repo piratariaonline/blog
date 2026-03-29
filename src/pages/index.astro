@@ -1,11 +1,11 @@
 ---
-import BlogCard from '@/components/BlogCard.astro'
-import Link from '@/components/Link.astro'
-import PageHead from '@/components/PageHead.astro'
-import { buttonVariants } from '@/components/ui/button'
-import { SITE } from '@/consts'
-import Layout from '@/layouts/Layout.astro'
-import { getRecentPosts } from '@/lib/data-utils'
+import BlogCard from '../components/BlogCard.astro'
+import Link from '../components/Link.astro'
+import PageHead from '../components/PageHead.astro'
+import { buttonVariants } from '../components/ui/button'
+import { SITE } from '../consts'
+import Layout from '../layouts/Layout.astro'
+import { getRecentPosts } from '../lib/data-utils'
 import { Icon } from 'astro-icon/components'
 
 const blog = await getRecentPosts(SITE.featuredPostCount)
@@ -13,7 +13,7 @@ const title = 'alein'
 ---
 
 <Layout class="max-w-3xl">
-  <PageHead slot="head" title="Home" />
+  <PageHead slot="head" title="💀" />
   <section class="rounded-lg border hero-section">
     <!-- Mobile: Collapsible -->
     <details class="md:hidden">

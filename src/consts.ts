@@ -1,9 +1,9 @@
-import type { IconMap, SocialLink, Site } from '@/types'
+import type { IconMap, SocialLink, Site } from './types'
 
 export const SITE: Site = {
   title: 'carta na garrafa',
   description:
-    'delírios de uma pessoa insubordinada e ingovernável.',
+    'Uma pessoa ingovernável em um skate filosófico no halfpipe de dunning-kruger.',
 	  href: 'https://blog.alanmm.dev',
   author: 'alein',
   locale: 'pt-BR',
