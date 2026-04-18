@@ -40,16 +40,47 @@ export function parseMdx(source: string): { frontmatter: Frontmatter; body: stri
 }
 
 export function stringifyMdx(frontmatter: Frontmatter, body: string): string {
-  const cleaned: Frontmatter = {};
+  const cleaned: Record<string, unknown> = {};
   for (const [k, v] of Object.entries(frontmatter)) {
     if (v === undefined || v === null) continue;
     if (Array.isArray(v) && v.length === 0) continue;
     if (typeof v === 'string' && v.trim() === '') continue;
     cleaned[k] = v;
   }
-  const dumped = yaml
-    .dump(cleaned, { lineWidth: 120, noRefs: true, sortKeys: false })
+
+  // Coerce a YYYY-MM-DD string into a real Date so js-yaml emits it as an
+  // unquoted YAML timestamp (`date: 2026-04-18`) — matching the hand-authored
+  // posts and Astro's `z.coerce.date()` happy path.
+  if (typeof cleaned.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(cleaned.date)) {
+    // Use UTC midnight to avoid timezone shifts changing the day.
+    cleaned.date = new Date(`${cleaned.date}T00:00:00Z`);
+  }
+
+  // Goals (match the hand-authored frontmatter style):
+  //   * lineWidth: -1   → never fold long strings into `>-` blocks.
+  //   * flowLevel: 1    → arrays at depth 1 use inline `[a, b, c]` form.
+  //   * quotingType `'` → prefer single quotes when quoting is needed.
+  //   * styles `!!timestamp: canonical` → emit Date as `YYYY-MM-DD` only
+  //     (no time component).
+  let dumped = yaml
+    .dump(cleaned, {
+      lineWidth: -1,
+      noRefs: true,
+      sortKeys: false,
+      flowLevel: 1,
+      quotingType: "'",
+      forceQuotes: false,
+      styles: { '!!timestamp': 'canonical' },
+    })
     .trimEnd();
+
+  // js-yaml's canonical timestamp still appends `T00:00:00.000Z`. Strip the
+  // time portion when it's exactly midnight UTC so we get a clean date.
+  dumped = dumped.replace(
+    /^(\s*date:\s*)(\d{4}-\d{2}-\d{2})T00:00:00(?:\.000)?Z\s*$/m,
+    '$1$2',
+  );
+
   if (!dumped) return body.startsWith('\n') ? body.slice(1) : body;
   return `---\n${dumped}\n---\n\n${body.replace(/^\n+/, '')}`;
 }
