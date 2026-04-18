@@ -1,0 +1,226 @@
+@import 'tailwindcss';
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #root {
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+  margin: 0;
+}
+
+/* --- mdxeditor layout override ---
+   Real DOM (v3.15) — three modes share the same outer chain:
+     .mdxeditor                                   (flex column)
+       .mdxeditor-toolbar                         (flex 0 0 auto)
+       .mdxeditor-diff-source-wrapper             (flex:1, min-h:0, flex column)
+         RICH:   .mdxeditor-rich-text-editor
+                   .mdxeditor-root-contenteditable   <-- scroll here
+         SOURCE: .mdxeditor-source-editor.cm-sourceView
+                   .cm-editor
+                     .cm-scroller                    <-- scroll here
+         DIFF:   .mdxeditor-diff-editor
+                   .cm-mergeView
+                     .cm-mergeViewEditors
+                       .cm-mergeViewEditor (x2)
+                         .cm-editor
+                           .cm-scroller              <-- scroll here
+   Inactive mode wrappers get inline `style="display:none"`, so we NEVER
+   override `display` with !important — we only force sizing. */
+.mdx-body-editor-host {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.mdx-body-editor-host > .mdxeditor {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+.mdx-body-editor-host .mdxeditor > [class*='_toolbarRoot_'],
+.mdx-body-editor-host .mdxeditor-toolbar {
+  flex: 0 0 auto !important;
+}
+.mdx-body-editor-host .mdxeditor-diff-source-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+}
+
+/* Each mode's top-level wrapper. Do NOT force display — mdxeditor toggles
+   display:none/block inline to switch modes and we must respect it. */
+.mdx-body-editor-host .mdxeditor-rich-text-editor,
+.mdx-body-editor-host .mdxeditor-source-editor,
+.mdx-body-editor-host .mdxeditor-diff-editor {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Rich text mode: contenteditable wrapper scrolls */
+.mdx-body-editor-host .mdxeditor-root-contenteditable {
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Source mode: single CodeMirror fills its wrapper; cm-scroller handles scroll */
+.mdx-body-editor-host .mdxeditor-source-editor > .cm-editor {
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
+/* Diff mode: merge view + its children form a row whose cells fill parent */
+.mdx-body-editor-host .cm-mergeView,
+.mdx-body-editor-host .cm-mergeViewEditors {
+  display: flex !important;
+  flex-direction: row !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+}
+.mdx-body-editor-host .cm-mergeViewEditor {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+}
+.mdx-body-editor-host .cm-mergeViewEditor > .cm-editor {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
+/* CodeMirror's own scroll container — used by both source and diff modes */
+.mdx-body-editor-host .cm-editor .cm-scroller {
+  overflow: auto !important;
+  max-height: 100% !important;
+}
+
+/* Toolbar icon/label contrast (dark-theme) */
+.mdxeditor.dark-theme .mdxeditor-toolbar button svg {
+  color: #e5e5e5;
+}
+.mdxeditor.dark-theme .mdxeditor-toolbar button:hover svg {
+  color: #fafafa;
+}
+.mdxeditor.dark-theme .mdxeditor-toolbar [data-toolbar-item] {
+  color: #e5e5e5;
+}
+.mdxeditor.dark-theme .mdxeditor-toolbar select,
+.mdxeditor.dark-theme .mdxeditor-toolbar [role='combobox'] {
+  color: #e5e5e5;
+}
+
+/* Toolbar "Block type" / other select dropdowns (Radix popper portal).
+   mdxeditor uses CSS-module classes like _selectContainer_, _selectItem_,
+   _selectTrigger_. Target them via prefix selector so the dropdown panel
+   gets a dark background with legible text instead of the default near-white
+   on white look. */
+[class*='_selectContainer_'] {
+  background: #171717 !important;
+  border: 1px solid #404040 !important;
+  color: #e5e5e5 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+[class*='_selectItem_'] {
+  color: #d4d4d4 !important;
+  background: transparent !important;
+}
+[class*='_selectItem_'][data-highlighted],
+[class*='_selectItem_']:hover {
+  background: #262626 !important;
+  color: #fafafa !important;
+  outline: none !important;
+}
+[class*='_selectItem_'][data-state='checked'] {
+  color: #f5c518 !important;
+  background: #1f1f1f !important;
+}
+[class*='_selectTrigger_'] {
+  color: #e5e5e5 !important;
+  background: #1f1f1f !important;
+  border: 1px solid #404040 !important;
+}
+[class*='_selectTrigger_']:hover {
+  background: #262626 !important;
+}
+[class*='_selectDropdownArrow_'] {
+  color: #a3a3a3 !important;
+}
+
+/* Resizable panel handle */
+.panel-handle {
+  background: #1f1f1f;
+  width: 4px;
+  cursor: col-resize;
+  position: relative;
+}
+.panel-handle:hover {
+  background: #f5c518;
+}
+.panel-handle-h {
+  /* horizontal divider between frontmatter and body editor — no resize, just a line with a toggle */
+  flex: 0 0 auto;
+  height: 4px;
+  background: #1f1f1f;
+  position: relative;
+}
+.panel-handle-h:hover {
+  background: #2a2a2a;
+}
+/* The round toggle button that sits on the divider line */
+.panel-handle-btn {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #262626;
+  color: #a3a3a3;
+  border: 1px solid #404040;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+}
+.panel-handle-btn:hover {
+  background: #f5c518;
+  color: #000;
+  border-color: #f5c518;
+}
+/* On the vertical (column) resize handle, center the button on the 4px bar */
+.panel-handle-v .panel-handle-btn {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* On the horizontal divider the button sits centered vertically on the 4px bar */
+.panel-handle-h .panel-handle-btn {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* preview iframe host */
+.preview-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #0a0a0a;
+  display: block;
+}
