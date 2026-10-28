@@ -108,6 +108,70 @@ html, body, #root {
   max-height: 100% !important;
 }
 
+/* WYSIWYG content styling — make headings, links, blockquotes and code look
+   the part inside the contenteditable, the same way bold/italic already do.
+   Scoped to the editor host so it never leaks to the preview iframe. */
+.mdx-body-editor-host .mdxeditor-root-contenteditable h1,
+.mdx-body-editor-host .mdxeditor-root-contenteditable h2,
+.mdx-body-editor-host .mdxeditor-root-contenteditable h3,
+.mdx-body-editor-host .mdxeditor-root-contenteditable h4,
+.mdx-body-editor-host .mdxeditor-root-contenteditable h5,
+.mdx-body-editor-host .mdxeditor-root-contenteditable h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fafafa;
+  margin: 1.25em 0 0.5em;
+}
+.mdx-body-editor-host .mdxeditor-root-contenteditable h1 { font-size: 1.875rem; }
+.mdx-body-editor-host .mdxeditor-root-contenteditable h2 { font-size: 1.5rem; }
+.mdx-body-editor-host .mdxeditor-root-contenteditable h3 { font-size: 1.25rem; }
+.mdx-body-editor-host .mdxeditor-root-contenteditable h4 { font-size: 1.1rem; }
+.mdx-body-editor-host .mdxeditor-root-contenteditable h5 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: #d4d4d4; }
+.mdx-body-editor-host .mdxeditor-root-contenteditable h6 { font-size: 0.875rem; color: #a3a3a3; }
+
+.mdx-body-editor-host .mdxeditor-root-contenteditable a {
+  color: #f5c518;
+  text-decoration: underline;
+  text-decoration-color: rgba(245, 197, 24, 0.5);
+  text-underline-offset: 2px;
+  cursor: text;
+}
+.mdx-body-editor-host .mdxeditor-root-contenteditable a:hover {
+  text-decoration-color: #f5c518;
+}
+
+.mdx-body-editor-host .mdxeditor-root-contenteditable blockquote {
+  border-left: 3px solid #525252;
+  padding-left: 0.875rem;
+  color: #d4d4d4;
+  font-style: italic;
+  margin: 1em 0;
+}
+
+.mdx-body-editor-host .mdxeditor-root-contenteditable code {
+  background: #262626;
+  color: #f5c518;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+.mdx-body-editor-host .mdxeditor-root-contenteditable pre,
+.mdx-body-editor-host .mdxeditor-root-contenteditable pre code {
+  background: #171717;
+  color: #e5e5e5;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  display: block;
+  overflow-x: auto;
+}
+
+.mdx-body-editor-host .mdxeditor-root-contenteditable hr {
+  border: 0;
+  border-top: 1px solid #404040;
+  margin: 1.5em 0;
+}
+
 /* Toolbar icon/label contrast (dark-theme) */
 .mdxeditor.dark-theme .mdxeditor-toolbar button svg {
   color: #e5e5e5;
@@ -158,6 +222,81 @@ html, body, #root {
 }
 [class*='_selectDropdownArrow_'] {
   color: #a3a3a3 !important;
+}
+
+/* Link popover (the floating panel that appears when you hover/click a link
+   in the rich text editor). mdxeditor's CSS-module classes:
+     _linkDialogPopoverContent_, _linkDialogPreviewAnchor_, _linkDialogInput_,
+     _linkDialogInputContainer_, _dialogContent_, _popupContainer_, _tooltipContent_
+   Same dark palette as the toolbar dropdowns. */
+[class*='_linkDialogPopoverContent_'],
+[class*='_dialogContent_'],
+[class*='_popupContainer_'],
+[class*='_tooltipContent_'] {
+  background: #171717 !important;
+  color: #e5e5e5 !important;
+  border: 1px solid #404040 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+[class*='_tooltipContent_'] svg,
+[class*='_linkDialogPopoverContent_'] svg,
+[class*='_dialogContent_'] svg {
+  color: #d4d4d4 !important;
+  fill: currentColor !important;
+}
+[class*='_linkDialogPreviewAnchor_'] {
+  color: #f5c518 !important;
+  text-decoration: none !important;
+}
+[class*='_linkDialogPreviewAnchor_']:hover {
+  text-decoration: underline !important;
+}
+[class*='_linkDialogPreviewAnchor_'] span {
+  color: #d4d4d4 !important;
+}
+/* Action buttons (copy, edit, remove) inside the link popover */
+[class*='_linkDialogPopoverContent_'] button,
+[class*='_dialogContent_'] button,
+[class*='_tooltipContent_'] button {
+  background: #262626 !important;
+  color: #e5e5e5 !important;
+  border: 1px solid #404040 !important;
+  border-radius: 4px !important;
+  padding: 4px !important;
+}
+[class*='_linkDialogPopoverContent_'] button:hover,
+[class*='_dialogContent_'] button:hover,
+[class*='_tooltipContent_'] button:hover {
+  background: #f5c518 !important;
+  border-color: #f5c518 !important;
+  color: #000 !important;
+}
+[class*='_linkDialogPopoverContent_'] button:hover svg,
+[class*='_dialogContent_'] button:hover svg,
+[class*='_tooltipContent_'] button:hover svg {
+  color: #000 !important;
+}
+/* Inline edit form inputs (URL / title) */
+[class*='_linkDialogInput_'],
+[class*='_dialogInput_'] {
+  background: #0a0a0a !important;
+  color: #fafafa !important;
+  border: 1px solid #404040 !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+}
+[class*='_linkDialogInput_']::placeholder,
+[class*='_dialogInput_']::placeholder {
+  color: #737373 !important;
+}
+[class*='_linkDialogInput_']:focus,
+[class*='_dialogInput_']:focus {
+  outline: none !important;
+  border-color: #f5c518 !important;
+}
+[class*='_dialogTitle_'] {
+  color: #fafafa !important;
 }
 
 /* Resizable panel handle */

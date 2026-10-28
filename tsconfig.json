@@ -8,5 +8,6 @@
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
-  }
+  },
+  "exclude": ["editor/**", "node_modules", "dist"]
 }
